@@ -49,7 +49,9 @@ var DefaultParams = {
 
     // cancels duplicate api call for the combination of same url and parameter and api method
     // bydefault this property is on
-    allowDuplicateCall: false
+    allowDuplicateCall: false,
+
+    credentials: 'include'
 
     /**
      * overrides configuration
@@ -143,7 +145,8 @@ function ApiCall(_ref) {
         resolve = _ref.resolve,
         reject = _ref.reject,
         params = _ref.params,
-        signal = _ref.signal;
+        signal = _ref.signal,
+        credentials = _ref.credentials;
 
     var postDict = {
         headers: headers, method: method
@@ -162,7 +165,7 @@ function ApiCall(_ref) {
         method: method,
         params: params,
         signal: signal,
-        credentials: 'include'
+        credentials: credentials
     }).then(function (response) {
         status = response.status;return response.json();
     }).then(function (response) {
@@ -197,6 +200,8 @@ function getNecessaryParams(attr) {
 
     var reject = attr.hasOwnProperty('reject') ? attr.reject : DefaultParams.reject;
 
+    var credentials = attr.hasOwnProperty('credentials') ? attr.credentials : DefaultParams.credentials;
+
     var signal = void 0;
 
     if (attr.allowDuplicateCall) {
@@ -212,7 +217,8 @@ function getNecessaryParams(attr) {
         resolve: resolve,
         reject: reject,
         extraParams: attr.extraParams,
-        signal: signal
+        signal: signal,
+        credentials: credentials
     };
 
     if (attr.body) {
