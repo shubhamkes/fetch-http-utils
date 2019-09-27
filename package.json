@@ -1,6 +1,6 @@
 {
     "name": "fetch-http-utils",
-    "version": "0.0.5",
+    "version": "0.1.0",
     "description": "Small wrapper written around fetch api",
     "main": "build/index.js",
     "scripts": {
