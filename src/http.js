@@ -3,7 +3,8 @@
  * implements get, post, put, delete calls
  ****************************************/
 'use strict';
-import CustomError from './customError';
+// import CustomError from './customError';
+const CustomError = require('./customError');
 
 // const defaultHeaders = {
 //     'Content-Type': 'application/json;charset=UTF-8',
@@ -33,6 +34,8 @@ let DefaultParams = {
     // cancels duplicate api call for the combination of same url and parameter and api method
     // bydefault this property is on
     allowDuplicateCall: false,
+
+    fetch: typeof fetch == 'undefined' ? null : fetch,
 
     credentials: 'include'
 }
@@ -131,8 +134,10 @@ function ApiCall({ url, method, headers, body, resolve, reject, params, signal, 
     }
     let status = '';
 
+    let Fetch = DefaultParams.fetch;
+
     /** Get the fuck out of the api */
-    return fetch(url, {
+    return Fetch(url, {
         headers,
         body,
         method,
@@ -254,7 +259,7 @@ function defaultReject(response) {
  */
 function preventPreviousCall(url) {
     const apiCall = apiList[url];
-    if (window && window.AbortController) {
+    if ((typeof window != 'undefined') && window.AbortController) {
         const controller = new window.AbortController();
         if (apiCall) {
             try {
@@ -268,4 +273,9 @@ function preventPreviousCall(url) {
 
 function markCompletedCall(url) {
     delete apiList[url];
+}
+
+
+function isUndefined(variable) {
+    return typeof variable == 'undefined';
 }
