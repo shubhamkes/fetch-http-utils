@@ -6,7 +6,7 @@ module.exports = {
     entry: path.join(__dirname, "src/index.js"),
     output: {
         path: path.join(__dirname, "/build"),
-        libraryTarget: 'umd',
+        libraryTarget: 'commonjs2',
         filename: "index.js"
     },
     // plugins: [
@@ -17,12 +17,12 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ['env']
-                    }
-                },
+                // use: {
+                //     loader: "babel-loader",
+                //     options: {
+                //         presets: ['env']
+                //     }
+                // },
             }
         ]
     },
