@@ -27,6 +27,7 @@
     "author": "shubham.kesarwani89@gmail.com",
     "license": "MIT",
     "dependencies": {
+        "axios": "^0.19.2",
         "node-fetch": "^2.6.0"
     }
 }
