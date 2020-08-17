@@ -4,7 +4,7 @@ Target - Front End Projects
 
 # What is it #
 
-A tiny wrapper(1.2k) built around fetch to shorten your syntax and handle many things for you.
+A tiny wrapper(1.2k) built around axios to shorten your syntax and handle many things for you.
 
 # What does it do #
 
@@ -24,68 +24,47 @@ fetch-http-utils gives many functionalities at generic level (like cancelling du
 
 * To be invoked on app startup. 
 ```javascript
-    import { InitialiseHttpUtils } from 'fetch-http-utils';
+    import { Http } from 'fetch-http-utils';
 
     // configure lib with this method
     // each of these configurations can be overridden at the time of individual api call
-    InitialiseHttpUtils({
-        // urlPrefix is the endpoint, which will be appended with every request, hence you just have to provide route while making api call each time
-        // for eg https://www.someurl.com/getUsers , urlPrefix would be https://www.someurl.com/
-
-        // urlPrefix must be specified with InitialiseHttpUtils method
-        // also for individual calls, urlPrefix can be overridden
-        urlPrefix: '',
-
-        // with each api call, headers are sent 
+    const http = Http.getInstance({
+        baseURL: 'https://sk-api-services.herokuapp.com/', 
         headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
+           'Content-Type': 'application/json;charset=UTF-8'
         },
-
-        // resolve and rejects are callback functions which gets executed on success or failure of call respectively
-        resolve: defaultResolve,
-        reject: defaultReject,
-
-        // cancels duplicate api call for the combination of same url and parameter and api method
-        // if set to true, will not cancel duplicate call
-        allowDuplicateCall: false,
-
-        credentials: 'include' 
-    })
-
+        timeout: 0, // default is 0
+    });
 ```
 
 ### APIs ###
 
-* Get, Put, Post, Delete
+* get, put, post, delete
 
 ```javascript
-    const result = await Get({ url: 'getUsers' }); // considering urlPrefix https://www.someurl.com/
+    const result = await http.get({ url: 'getUsers' }); // considering baseURL https://www.someurl.com/
     console.log(result); // { data, status } 
 
-    const result = await Post({ url: 'user', body: { name: 'test', email: 'test@test.com' } }); // 
+    const result = await http.post({ url: 'user', data: { name: 'test', email: 'test@test.com' } }); // 
 
-    const result = await Put({ url: 'user', body: { name: 'test test' } }); /
+    const result = await http.put({ url: 'user', data: { name: 'test test' } }); /
 
-    const result = await Delete({ url: 'users/1' }); 
+    const result = await http.delete({ url: 'users/1' }); 
 ```
 
 ### Params ###
 
 ```javascript
     /**
-    * @param  {string} url - for eg https://www.someurl.com/getUsers, url should be 'getUsers' (considering urlPrefix is already initialsed using InitialiseHttpUtils)
+    * @param  {string} url - for eg https://www.someurl.com/getUsers, url should be 'getUsers' (considering baseURL is already initialsed using InitialiseHttpUtils)
 
     * @param  {object} headers (optional) - for individual call, headers can be extended with default ones
 
     * @param  {boolean} resetHeader (optional) - if set to true, will override the headers with one provided as param for that particular api call
 
-    * @param  {any} body (optional) - payload to be sent (not applicable for Get and Delete call)
-
-    * @param  {function} resolve (optional) - function which get invoked after successful completion of api call
-
-    * @param  {function} reject (optional) - function which get invoked on failure of api call
+    * @param  {any} data (optional) - payload to be sent (not applicable for Get and Delete call)
     
-    * @param  {object} credentials (optional) - default include
+    * @param  {object} credentials (optional) - default false
     */
 ```
 
@@ -94,7 +73,7 @@ fetch-http-utils gives many functionalities at generic level (like cancelling du
 * How do I override endpoint for particular call  
 
 ```javascript
-    await Get({ urlPrefix: 'https://www.someOtherurl.com/', url: 'getUsers' });
+    await http.get({ baseURL: 'https://www.someOtherurl.com/', url: 'getUsers' });
 ```
 
 * How do I upload files 
@@ -112,11 +91,11 @@ fetch-http-utils gives many functionalities at generic level (like cancelling du
 
     // payloadType in this case would be resetHeader
     // headers are optional, but to be on safer side have added it headers
-    const result = await Post({ url: 'someUploadUrl', body: payload, payloadType: 'FormData', resetHeader: true, headers: { 'Content-Type': 'multipart/form-data' } });
+    const result = await http.post({ url: 'someUploadUrl', data: payload, resetHeader: true, headers: { 'Content-Type': 'multipart/form-data' } });
 ```
 
 * How do I prevent from cancelling duplicate calls for few hits
 
 ```javascript
-    await Get({ url: 'getUsers', allowDuplicateCall: true });
+    await http.get({ url: 'getUsers', allowDuplicateCall: true });
 ```
