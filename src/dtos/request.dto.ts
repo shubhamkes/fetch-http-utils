@@ -1,4 +1,4 @@
-export class RequestDto {
+export interface RequestDto {
     baseURL?: string;
 
     headers?: {};

@@ -89,7 +89,7 @@ export class RemoteRequest {
      * @param  {RequestDto} options
      */
     private sanitizeOptions(options) {
-        const attr = this.attributes.headers;
+        const attr = this.attributes;
         if (options.resetHeader) { // incase of resetHeader true, default headers is ignored
             attr.headers = {};
         }

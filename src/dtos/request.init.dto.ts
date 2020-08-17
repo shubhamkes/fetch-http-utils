@@ -1,4 +1,4 @@
-export class RequestInitDto {
+export interface RequestInitDto {
     baseURL?: string;
     headers?: {};
     timeout?: number;
