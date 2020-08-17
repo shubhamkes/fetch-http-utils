@@ -4,7 +4,7 @@ Target - Front End Projects
 
 # What is it #
 
-A tiny wrapper(1.2k) built around fetch to shorten your syntax and handle many things for you.
+A tiny wrapper(1.2k) built around axios to shorten your syntax and handle many things for you.
 
 # What does it do #
 
