@@ -3,3 +3,5 @@
 // module.exports = Http;
 
 export { RemoteRequest as Http } from './remote.request';
+
+export * from './dtos';
