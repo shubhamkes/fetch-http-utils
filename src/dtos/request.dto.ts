@@ -1,8 +1,8 @@
 export class RequestDto {
-    baseUrl?: string;
+    baseURL?: string;
 
     headers?: {};
-    body?: {};
+    data?: {};
     url: string;
 
     myHeader?: boolean;

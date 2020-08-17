@@ -1,5 +1,5 @@
 export class RequestInitDto {
-    baseUrl: string;
-    headers: {};
-    timeout: number;
+    baseURL?: string;
+    headers?: {};
+    timeout?: number;
 }

@@ -1,24 +1,36 @@
 import Axios, * as axios from 'axios';
 
-import { RequestDto } from './dtos/request.dto';
+import { RequestDto, RequestInitDto } from './dtos';
+
+const defaultConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+    }
+}
+
 export class RemoteRequest {
     private static instance: RemoteRequest;
+    private axiosInstance: axios.AxiosInstance;
 
     private attributes: axios.AxiosRequestConfig = {};
 
-    private constructor(options: RequestInit) {
+    private constructor(options: RequestInitDto) {
+        this.axiosInstance = Axios.create({ ...defaultConfig, ...options });
+
         this.init(options);
     }
 
-    static getInstance(options: RequestInit) {
+    static getInstance(options: RequestInitDto) {
         if (this.instance) return this.instance;
 
         this.instance = new RemoteRequest(options);
+
         return this.instance;
     }
 
-    private init(options: RequestInit) {
-        Object.assign(this.attributes, options);
+    private init(options: RequestInitDto) {
+        // Object.assign(this.attributes, options);
+        this.attributes = { ...this.attributes, ...options };
     }
 
     private attachBaseHeaders() {
@@ -27,22 +39,48 @@ export class RemoteRequest {
             'Content-Type': 'application/json',
         };
     }
+
     async get(options: RequestDto) {
-        const attributes: axios.AxiosRequestConfig = {};
-        Object.assign(attributes, options);
+        let attributes: axios.AxiosRequestConfig = { ...options, method: 'get' };
+        attributes = this.sanitizeOptions(attributes);
 
-        attributes.method = 'get';
+        return this.process(attributes);
+    }
 
-        this.process(attributes);
+    async post(options: RequestDto) {
+        let attributes: axios.AxiosRequestConfig = { ...options, method: 'post' };
+        attributes = this.sanitizeOptions(attributes);
+
+        return this.process(attributes);
+    }
+
+    async put(options: RequestDto) {
+        let attributes: axios.AxiosRequestConfig = { ...options, method: 'put' };
+        attributes = this.sanitizeOptions(attributes);
+
+        return this.process(attributes);
+    }
+
+    async delete(options: RequestDto) {
+        let attributes: axios.AxiosRequestConfig = { ...options, method: 'delete' };
+        attributes = this.sanitizeOptions(attributes);
+
+        return this.process(attributes);
+    }
+
+    sanitizeOptions(options) {
+        // const headers = this.
+        return Object.assign(this.attributes, options);
     }
 
     async process(options: axios.AxiosRequestConfig) {
-        Axios(options)
+        // options.url = options.baseURL + options.url;
+        return this.axiosInstance(options)
             .then(function (response) {
                 return response;
             })
             .catch(function (error) {
-                console.log(error);
+                return error;
             });
     }
 }
