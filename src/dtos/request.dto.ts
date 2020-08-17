@@ -5,8 +5,10 @@ export class RequestDto {
     data?: {};
     url: string;
 
-    myHeader?: boolean;
+    resetHeader?: boolean;
     timeout?: number;
 
     params?: {};
+
+    allowDuplicateCall?: boolean;
 }

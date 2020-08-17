@@ -69,8 +69,12 @@ export class RemoteRequest {
     }
 
     sanitizeOptions(options) {
+        const attr = this.attributes.headers;
+        if (options.resetHeader) { // incase of resetHeader true, default headers is ignored
+            attr.headers = {};
+        }
         // const headers = this.
-        return Object.assign(this.attributes, options);
+        return Object.assign(attr, options);
     }
 
     async process(options: axios.AxiosRequestConfig) {
