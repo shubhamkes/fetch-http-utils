@@ -5,7 +5,8 @@ import { RequestDto, RequestInitDto } from './dtos';
 const defaultConfig = {
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
-    }
+    },
+    withCredentials: true
 }
 
 export class RemoteRequest {
