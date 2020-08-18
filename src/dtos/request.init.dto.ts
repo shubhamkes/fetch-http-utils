@@ -3,4 +3,5 @@ export interface RequestInitDto {
     headers?: {};
     timeout?: number;
     allowDuplicateCall?: boolean;
+    withCredentials?: boolean;
 }

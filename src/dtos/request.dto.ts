@@ -11,4 +11,5 @@ export interface RequestDto {
     params?: {};
 
     allowDuplicateCall?: boolean;
+    withCredentials?: boolean;
 }
