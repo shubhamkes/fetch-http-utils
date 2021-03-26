@@ -1,6 +1,6 @@
 {
     "name": "fetch-http-utils",
-    "version": "2.0.5",
+    "version": "2.0.9",
     "description": "Small wrapper written around fetch api",
     "types": "dist/index.d.ts",
     "main": "dist/index.js",
@@ -30,6 +30,6 @@
     "author": "shubham.kesarwani89@gmail.com",
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.19.2"
+        "axios": "^0.21.1"
     }
 }
